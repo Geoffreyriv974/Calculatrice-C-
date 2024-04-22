@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using Calculator;
+using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,24 +21,24 @@ namespace Interface
         public MainWindow()
         {
             InitializeComponent();
+            this.calc = new Calcul();
+        }
+
+        public Calcul calc
+        {
+            get; set;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            var button = sender as Button;
+            if (button == null || button.Content == null) return;
+            this.Label.Content = button.Content as string;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void test(object sender, RoutedEventArgs e)
         {
-
-        }
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
+            Trace.WriteLine("tata");
 
         }
     }

@@ -28,6 +28,12 @@ namespace Calculator
 
         public float calc()
         {
+
+            if (Number2 == 0)
+            {
+                throw new DivideByZeroException("Impossble de diviser par 0 !");
+            }
+
             return Number1 / Number2;
         }
 

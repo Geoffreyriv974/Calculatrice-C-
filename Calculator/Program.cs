@@ -10,6 +10,12 @@ internal class Program
 
         using var db = new CalcDbContext();
 
+        Console.WriteLine("Calculs enregistrés en base de données :");
+        foreach (var calculus in db.Calculus) 
+        {
+            Console.WriteLine($"{calculus.Id} = {calculus.Value1} {calculus.Operateur} {calculus.Value2}");        
+        }
+
         float number1 = 0;
         float number2 = 0;
 

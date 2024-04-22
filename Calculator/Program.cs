@@ -11,24 +11,21 @@ internal class Program
         using var db = new CalcDbContext();
 
         Console.WriteLine("Calculs enregistrés en base de données :");
-        foreach (var calculus in db.Calculus) 
+        foreach (var calculus in db.Calculus)
         {
-            Console.WriteLine($"{calculus.Id} = {calculus.Value1} {calculus.Operateur} {calculus.Value2}");        
+            Console.WriteLine($"{calculus.Id} = {calculus.Value1} {calculus.Operateur} {calculus.Value2}");
         }
 
-        float number1 = 0;
-        float number2 = 0;
+        float number1 = float.NaN;
+        float number2 = float.NaN;
 
-        while (true)
+        while (float.IsNaN(number1))
         {
             try
             {
 
                 Console.Write("Nombre 1 : ");
                 number1 = Convert.ToInt32(Console.ReadLine());
-
-                break;
-
             }
             catch (Exception ex)
             {
@@ -40,16 +37,13 @@ internal class Program
         Console.Write("Operateur (+ , - , * , /): ");
         string calc = Console.ReadLine();
 
-        while (true)
+        while (float.IsNaN(number2))
         {
             try
             {
 
                 Console.Write("Nombre 2 : ");
                 number2 = Convert.ToInt32(Console.ReadLine());
-
-                break;
-
             }
             catch (Exception ex)
             {
@@ -84,6 +78,7 @@ internal class Program
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            return;
         }
 
         Console.WriteLine($"Database path: {db.DbPath}.");

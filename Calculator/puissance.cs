@@ -7,14 +7,19 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    public class Carre : IOperation
+    public class puissance : IOperation
     {
-        public Carre(float number1)
+        public puissance(float number1)
         {
             this.Number1 = number1;
         }
 
         public float Number1
+        {
+            get; set;
+        }
+
+        public float Number2
         {
             get; set;
         }

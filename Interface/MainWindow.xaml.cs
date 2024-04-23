@@ -3,6 +3,7 @@ using Calculator;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -34,7 +35,14 @@ namespace Interface
         {
             var button = sender as Button;
             if (button == null || button.Content == null) return;
-            this.Label.Content += button.Content as string;
+
+            if (button.Content.ToString() == "x²")
+            {
+                this.Label.Content += "²";
+            }else
+            {
+                this.Label.Content += button.Content as string;
+            }
 
         }
 
@@ -43,5 +51,65 @@ namespace Interface
             this.Label.Content = "";
         }
 
+        private void Remove(object sender, RoutedEventArgs e)
+        {
+            if (this.Label.Content != null && !string.IsNullOrEmpty(this.Label.Content.ToString()))
+            {
+                string currentContent = this.Label.Content.ToString();
+                this.Label.Content = currentContent.Substring(0, currentContent.Length - 1);
+            }
+        }
+
+        private void Result(object sender, RoutedEventArgs e)
+        {
+
+            if (Label.Content != null)
+            {
+                IOperation operation = null;
+                string content = Label.Content.ToString();
+                float Number1 = 0;
+                float Number2 = 0;
+
+                if (content.Contains("+"))
+                {
+                    string[] parts = content.Split('+');
+
+                    operation = new Add(Number1, Number2);
+                    Label.Content = operation.calc();
+
+                }
+                else if (content.Contains("-"))
+                {
+                    string[] parts = content.Split('-');
+                    
+                    operation = new Sub(Number1, Number2);
+                    Label.Content = operation.calc();
+
+                }
+                else if (content.Contains("*"))
+                {
+                    string[] parts = content.Split('*');
+
+                    operation = new Mult(Number1, Number2);
+                    Label.Content = operation.calc();
+                }
+                else if (content.Contains("/"))
+                {
+                    string[] parts = content.Split('/');
+
+                    operation = new Div(Number1, Number2);
+                    Label.Content = operation.calc();
+                }
+                else if (content.Contains("²"))
+                {
+                    operation = new Carre(Number1);
+                    Label.Content = operation.calc();
+                }
+            } 
+            else
+            {
+                this.Label.Content = "ERROR!";
+            }
+        }
     }
 }

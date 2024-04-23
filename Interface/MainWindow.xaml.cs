@@ -1,4 +1,5 @@
-﻿using Calculator;
+﻿
+using Calculator;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;

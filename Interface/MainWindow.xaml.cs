@@ -36,9 +36,9 @@ namespace Interface
             var button = sender as Button;
             if (button == null || button.Content == null) return;
 
-            if (button.Content.ToString() == "x²")
+            if (button.Content.ToString() == "x^x")
             {
-                this.Label.Content += "²";
+                this.Label.Content += "^";
             }else
             {
                 this.Label.Content += button.Content as string;
@@ -74,36 +74,53 @@ namespace Interface
                 {
                     string[] parts = content.Split('+');
 
-                    operation = new Add(Number1, Number2);
-                    Label.Content = operation.calc();
+                    if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                    {
+                        operation = new Add(Number1, Number2);
+                        Label.Content = operation.calc();
+                    }
 
                 }
                 else if (content.Contains("-"))
                 {
                     string[] parts = content.Split('-');
-                    
-                    operation = new Sub(Number1, Number2);
-                    Label.Content = operation.calc();
+
+                    if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                    {
+                        operation = new Sub(Number1, Number2);
+                        Label.Content = operation.calc();
+                    }
 
                 }
                 else if (content.Contains("*"))
                 {
                     string[] parts = content.Split('*');
 
-                    operation = new Mult(Number1, Number2);
-                    Label.Content = operation.calc();
+                    if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                    {
+                        operation = new Mult(Number1, Number2);
+                        Label.Content = operation.calc();
+                    }
                 }
                 else if (content.Contains("/"))
                 {
                     string[] parts = content.Split('/');
 
-                    operation = new Div(Number1, Number2);
-                    Label.Content = operation.calc();
+                    if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                    {
+                        operation = new Div(Number1, Number2);
+                        Label.Content = operation.calc();
+                    }
                 }
-                else if (content.Contains("²"))
+                else if (content.Contains("x^x"))
                 {
-                    operation = new Carre(Number1);
-                    Label.Content = operation.calc();
+                    string[] parts = content.Split('^');
+
+                    if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                    {
+                        operation = new Puissance(Number1, Number2);
+                        Label.Content = operation.calc();
+                    }
                 }
             } 
             else

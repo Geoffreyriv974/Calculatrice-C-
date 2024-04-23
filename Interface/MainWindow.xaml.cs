@@ -34,13 +34,14 @@ namespace Interface
         {
             var button = sender as Button;
             if (button == null || button.Content == null) return;
-            this.Label.Content = button.Content as string;
+            this.Label.Content += button.Content as string;
+
         }
 
-        private void test(object sender, RoutedEventArgs e)
+        private void ClearLabel(object sender, RoutedEventArgs e)
         {
-            Trace.WriteLine("tata");
-
+            this.Label.Content = "";
         }
+
     }
 }

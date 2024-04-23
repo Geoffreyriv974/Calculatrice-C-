@@ -70,67 +70,86 @@ namespace Interface
                 float Number1 = 0;
                 float Number2 = 0;
 
-                if (content.Contains("+"))
-                {
-                    string[] parts = content.Split('+');
+                List <string> listOperator = new List<string>() { "+", "-", "*", "/", "^", "√" };
 
-                    if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                while (listOperator.Exists(op => content.Contains(op)){
+
+
+                    if (content.Contains("+"))
                     {
-                        operation = new Add(Number1, Number2);
-                        Label.Content = operation.calc();
-                    }
+                        string[] parts = content.Split('+');
 
-                }
-                else if (content.Contains("-"))
-                {
-                    string[] parts = content.Split('-');
-
-                    if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
-                    {
-                        operation = new Sub(Number1, Number2);
-                        Label.Content = operation.calc();
-                    }
-
-                }
-                else if (content.Contains("*"))
-                {
-                    string[] parts = content.Split('*');
-
-                    if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
-                    {
-                        operation = new Mult(Number1, Number2);
-                        Label.Content = operation.calc();
-                    }
-                }
-                else if (content.Contains("/"))
-                {
-                    string[] parts = content.Split('/');
-
-                    if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
-                    {
-                        if (Number2 != 0)
+                        if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
                         {
-                            operation = new Div(Number1, Number2);
+                            operation = new Add(Number1, Number2);
                             Label.Content = operation.calc();
                         }
-                        else
+
+                    }
+                    else if (content.Contains("-"))
+                    {
+                        string[] parts = content.Split('-');
+
+                        if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
                         {
-                            this.Label.Content = "ERROR!";
+                            operation = new Sub(Number1, Number2);
+                            Label.Content = operation.calc();
+                        }
+
+                    }
+                    else if (content.Contains("*"))
+                    {
+                        string[] parts = content.Split('*');
+
+                        if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                        {
+                            operation = new Mult(Number1, Number2);
+                            Label.Content = operation.calc();
                         }
                     }
-                }
-                else if (content.Contains("^"))
-                {
-                    string[] parts = content.Split('^');
-
-                    if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                    else if (content.Contains("/"))
                     {
-                        Trace.WriteLine(Number1 + " " + Number2);
-                        operation = new Puissance(Number1, Number2);
-                        Label.Content = operation.calc();
-                        Trace.WriteLine(operation.calc());
+                        string[] parts = content.Split('/');
+
+                        if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                        {
+                            if (Number2 != 0)
+                            {
+                                operation = new Div(Number1, Number2);
+                                Label.Content = operation.calc();
+                            }
+                            else
+                            {
+                                this.Label.Content = "ERROR!";
+                            }
+                        }
                     }
+                    else if (content.Contains("^"))
+                    {
+                        string[] parts = content.Split('^');
+
+                        if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                        {
+                            operation = new Puissance(Number1, Number2);
+                            Label.Content = operation.calc();
+                        }
+                    }
+                    else if (content.Contains("√"))
+                    {
+                        string[] parts = content.Split('√');
+
+                        if (parts.Length == 2 && float.TryParse(parts[1], out float number))
+                        {
+                            float number1 = float.Parse(parts[1]);
+                            operation = new Racine(number1);
+                            Label.Content = operation.calc();
+                        }
+
+                    }
+
+
                 }
+
             } 
             else
             {

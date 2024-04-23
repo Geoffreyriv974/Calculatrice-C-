@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    internal class Add : IOperation
+    public class Add : IOperation
     {
         public Add(float number1, float number2)
         {

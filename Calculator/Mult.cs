@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    internal class Mult : IOperation
+    public class Mult : IOperation
     {
         public Mult(float number1, float number2)
         {

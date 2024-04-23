@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Interface
 {
@@ -60,6 +61,16 @@ namespace Interface
             }
         }
 
+        private bool IsOperator(string op)
+        {
+            if (op == "+" || op == "-" || op == "*" || op == "/" || op == "^" || op == "√")
+            {
+                return true;
+            }
+            return false;
+
+        }
+
         private void Result(object sender, RoutedEventArgs e)
         {
 
@@ -67,89 +78,96 @@ namespace Interface
             {
                 IOperation operation = null;
                 string content = Label.Content.ToString();
-                float Number1 = 0;
-                float Number2 = 0;
 
-                List <string> listOperator = new List<string>() { "+", "-", "*", "/", "^", "√" };
+                List <string> listOperator = new List<string>();
 
-                while (listOperator.Exists(op => content.Contains(op)){
+                string currentNumber = "";
 
-
-                    if (content.Contains("+"))
+                foreach (char c in content)
+                {
+                    if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == '√')
                     {
-                        string[] parts = content.Split('+');
-
-                        if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
+                        if (!string.IsNullOrEmpty(currentNumber))
                         {
-                            operation = new Add(Number1, Number2);
-                            Label.Content = operation.calc();
+                            listOperator.Add(currentNumber);
+                            currentNumber = "";
                         }
-
+                        listOperator.Add(c.ToString());
                     }
-                    else if (content.Contains("-"))
+                    else
                     {
-                        string[] parts = content.Split('-');
-
-                        if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
-                        {
-                            operation = new Sub(Number1, Number2);
-                            Label.Content = operation.calc();
-                        }
-
+                        currentNumber += c;
                     }
-                    else if (content.Contains("*"))
-                    {
-                        string[] parts = content.Split('*');
-
-                        if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
-                        {
-                            operation = new Mult(Number1, Number2);
-                            Label.Content = operation.calc();
-                        }
-                    }
-                    else if (content.Contains("/"))
-                    {
-                        string[] parts = content.Split('/');
-
-                        if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
-                        {
-                            if (Number2 != 0)
-                            {
-                                operation = new Div(Number1, Number2);
-                                Label.Content = operation.calc();
-                            }
-                            else
-                            {
-                                this.Label.Content = "ERROR!";
-                            }
-                        }
-                    }
-                    else if (content.Contains("^"))
-                    {
-                        string[] parts = content.Split('^');
-
-                        if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
-                        {
-                            operation = new Puissance(Number1, Number2);
-                            Label.Content = operation.calc();
-                        }
-                    }
-                    else if (content.Contains("√"))
-                    {
-                        string[] parts = content.Split('√');
-
-                        if (parts.Length == 2 && float.TryParse(parts[1], out float number))
-                        {
-                            float number1 = float.Parse(parts[1]);
-                            operation = new Racine(number1);
-                            Label.Content = operation.calc();
-                        }
-
-                    }
-
-
+                }
+                if (!string.IsNullOrEmpty(currentNumber))
+                {
+                    listOperator.Add(currentNumber);
                 }
 
+                for (int i = 0; i < listOperator.Count; i++)
+                {
+
+                    string currentItem = listOperator[i];
+
+                    if (IsOperator(currentItem))
+                    {
+
+                        float Number1 = i == 0 ? 0 : float.Parse(listOperator[i - 1]);
+                        float Number2 = float.Parse(listOperator[i + 1]);
+
+                        switch (currentItem)
+                        {
+                            case "^":
+
+                                operation = new Puissance(Number1, Number2);
+
+                                break;
+                            case "√":
+                                operation = new Racine(Number2);
+
+                                break;
+                            case "*":
+
+                                operation = new Mult(Number1, Number2);
+
+                                break;
+                            case "/":
+
+                                if (Number2 != 0)
+                                {
+                                    operation = new Div(Number1, Number2);
+                                }
+                                else
+                                {
+                                    this.Label.Content = "ERROR!";
+                                }
+
+                                break;
+                            case "+":
+
+                                operation = new Add(Number1, Number2);
+
+                                break;
+                            case "-":
+
+                                operation = new Sub(Number1, Number2);
+
+                                break;
+                            default:
+                                break;
+                        }
+
+                        if (operation != null)
+                        {
+                            listOperator.RemoveRange(i - 1, 3);
+                            listOperator.Insert(i - 1, operation.calc().ToString());
+                            i -= 2;
+                        }
+                    }
+
+                    Label.Content = listOperator[0];
+
+                }
             } 
             else
             {

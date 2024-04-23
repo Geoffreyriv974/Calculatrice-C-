@@ -108,18 +108,27 @@ namespace Interface
 
                     if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
                     {
-                        operation = new Div(Number1, Number2);
-                        Label.Content = operation.calc();
+                        if (Number2 != 0)
+                        {
+                            operation = new Div(Number1, Number2);
+                            Label.Content = operation.calc();
+                        }
+                        else
+                        {
+                            this.Label.Content = "ERROR!";
+                        }
                     }
                 }
-                else if (content.Contains("x^x"))
+                else if (content.Contains("^"))
                 {
                     string[] parts = content.Split('^');
 
                     if (parts.Length == 2 && float.TryParse(parts[0], out Number1) && float.TryParse(parts[1], out Number2))
                     {
+                        Trace.WriteLine(Number1 + " " + Number2);
                         operation = new Puissance(Number1, Number2);
                         Label.Content = operation.calc();
+                        Trace.WriteLine(operation.calc());
                     }
                 }
             } 

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Data.SqlClient;
+using System.Numerics;
 
 namespace Interface
 {
@@ -25,12 +27,28 @@ namespace Interface
         {
             InitializeComponent();
             this.calc = new Calcul();
+
+            Refresh();
+
         }
 
         public Calcul calc
         {
             get; set;
         }
+
+        private void Refresh()
+        {
+            using (var db = new CalcDbContext())
+            {
+                var calcs = db.Calculus.ToList();
+                Trace.WriteLine("--------");
+                Trace.WriteLine(calcs.Last().Id);
+                Trace.WriteLine("--------");
+            }
+        }
+
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -73,6 +91,8 @@ namespace Interface
 
         private void Result(object sender, RoutedEventArgs e)
         {
+
+            var db = new CalcDbContext();
 
             if (Label.Content != null)
             {
@@ -163,9 +183,20 @@ namespace Interface
                             listOperator.Insert(i - 1, operation.calc().ToString());
                             i -= 2;
                         }
+
+                        db.Add(new Calculus
+                        {
+                            Operateur = currentItem,
+                            Value1 = Number1,
+                            Value2 = Number2
+                        });
+
+                        db.SaveChanges();
+
                     }
 
-                    Label.Content = listOperator[0];
+                    string result = listOperator[0];
+                    Label.Content = result;
 
                 }
             } 
@@ -173,6 +204,11 @@ namespace Interface
             {
                 this.Label.Content = "ERROR!";
             }
+
+            this.Label_bdd.Content = Label.Content;
+
+
+            
         }
     }
 }

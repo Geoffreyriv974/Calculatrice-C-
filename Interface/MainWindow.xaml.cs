@@ -42,12 +42,21 @@ namespace Interface
             using (var db = new CalcDbContext())
             {
                 var calcs = db.Calculus.ToList();
-                Trace.WriteLine("--------");
-                Trace.WriteLine(calcs.Last().Id);
-                Trace.WriteLine("--------");
-            }
-        }
 
+                if (calcs.Any())
+                {
+                    var lastResul = calcs.Last();
+
+                    Label_bdd.Content = $"{lastResul.Value1}{lastResul.Operateur}{lastResul.Value2}";
+                }
+                else
+                {
+                    Label_bdd.Content = "";
+                }
+
+            }
+
+        }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -193,6 +202,8 @@ namespace Interface
 
                         db.SaveChanges();
 
+                        Refresh();
+
                     }
 
                     string result = listOperator[0];
@@ -204,10 +215,6 @@ namespace Interface
             {
                 this.Label.Content = "ERROR!";
             }
-
-            this.Label_bdd.Content = Label.Content;
-
-
             
         }
     }

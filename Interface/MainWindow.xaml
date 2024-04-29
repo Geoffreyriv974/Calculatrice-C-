@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Interface"
         mc:Ignorable="d"
-        Title="Calculatrice" Height="450" Width="650">
+        Title="Calculatrice" Height="500" Width="650">
     <Grid ClipToBounds="True">
-        <Label Content="" x:Name="Label" HorizontalAlignment="Center" Height="40" Margin="0,57,0,0" VerticalAlignment="Top" Width="298" Background="Black" Foreground="White" FontSize="24" FontFamily="Cascadia Mono SemiLight"/>
-        <Grid HorizontalAlignment="Center" Height="260" Margin="0,111,0,0" VerticalAlignment="Top" Width="298">
+        <Label Content="" x:Name="Label_bdd" HorizontalAlignment="Center" Height="40" Margin="0,57,0,0" VerticalAlignment="Top" Width="298" Background="Black" Foreground="White" FontSize="24" FontFamily="Cascadia Mono SemiLight"/>
+        <Label Content="" x:Name="Label" HorizontalAlignment="Center" Height="40" Margin="0,102,0,0" VerticalAlignment="Top" Width="298" Background="Black" Foreground="White" FontSize="24" FontFamily="Cascadia Mono SemiLight"/>
+        <Grid HorizontalAlignment="Center" Height="260" Margin="0,155,0,0" VerticalAlignment="Top" Width="298">
             <Button Content="C" Height="48"  Width="71" Background="#FFA7A7A7" FontFamily="Arial" FontSize="24" Foreground="#FFE21C1C" VerticalAlignment="Top" HorizontalAlignment="Left" Click="ClearLabel"/>
             <Button Content="7" Height="48"  Width="71" FontFamily="Arial" FontSize="24" Background="Black" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,53,0,0" Click="Button_Click"/>
             <Button Content="8" Height="48" Width="71" RenderTransformOrigin="-0.421,-0.058" FontFamily="Arial" FontSize="24"  Background="Black" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="75,53,0,0" Click="Button_Click"/>
@@ -31,6 +32,6 @@
             <Button Content="=" Height="48"  Width="71" FontSize="24" FontFamily="Arial" Foreground="White" Background="#FF0CFF00" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="227,212,0,0" Click="Result"/>
 
         </Grid>
-
+        
     </Grid>
 </Window>
